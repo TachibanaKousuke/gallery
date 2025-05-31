@@ -1,9 +1,9 @@
 albums:
-  - name: "2023夏天"
+  - name: Travel
     photos:
-      - "images/2023_summer_1.jpg"
-      - "images/2023_summer_2.jpg"
-  - name: "毕业季"
+      - travel1.jpg
+      - travel2.jpg
+  - name: Family
     photos:
-      - "images/graduation_1.jpg"
-      - "images/graduation_2.jpg"
+      - family1.jpg
+      - family2.jpg
