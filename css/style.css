@@ -8,6 +8,7 @@ body {
     align-items: center;
     height: 100vh;
 }
+
 .player-container {
     background: linear-gradient(to bottom, #444, #000);
     border-radius: 20px;
@@ -18,49 +19,46 @@ body {
     text-align: center;
     transition: all 0.3s ease;
 }
-.desktop .player-container {
-    max-width: 500px;
-    max-height: 80vh;
-    overflow-y: auto;
-}
+
 @media (max-width: 768px) {
     .player-container {
         width: 95%;
         max-width: 100%;
         padding: 15px;
     }
-    .player-container {
-        max-height: none;
-        overflow: visible;
-    }
 }
+
 .album-cover {
     width: 100%;
     height: auto;
-    border-radius: 20px;
+    border-radius: 15px;
     overflow: hidden;
     margin-bottom: 20px;
     transition: transform 0.3s ease;
 }
+
 .album-cover:hover {
     transform: scale(1.05);
 }
+
 .album-cover img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 20px;
 }
+
 .song-info h2 {
     color: white;
     margin: 0;
     font-weight: bold;
 }
+
 .song-info p {
     color: #aaa;
     margin: 5px 0 0;
     font-style: italic;
 }
+
 .progress-bar {
     width: 100%;
     background-color: #555;
@@ -68,49 +66,50 @@ body {
     overflow: hidden;
     margin: 20px 0;
 }
+
 .progress-bar-fill {
     width: 0;
     height: 10px;
     background-color: white;
     transition: width 0.1s ease-in-out;
 }
+
 .time-display {
     color: #aaa;
     font-size: 0.9em;
 }
+
 .controls {
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
 }
+
 .controls button {
     background: none;
     border: none;
     color: #ccc;
     font-size: 1.5em;
     cursor: pointer;
-    transition: color 0.3s, transform 0.3s;
+    transition: color 0.3s;
 }
+
 .controls button:hover {
     color: white;
-    transform: scale(1.2);
 }
-.lyrics-container {
+
+.lyrics {
     text-align: left;
     margin-top: 20px;
-}
-.lyrics {
     line-height: 1.6;
 }
+
 .lyrics p {
     color: #aaa;
     margin: 5px 0;
 }
+
 .lyrics p.current-line {
     color: white;
     font-weight: bold;
-}
-.desktop .lyrics-container {
-    max-height: 200px;
-    overflow-y: auto;
 }

@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tachibana's Moments</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- 引入外部 CSS 文件 -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="player-container">
@@ -20,7 +19,7 @@
         <div class="progress-bar">
             <div class="progress-bar-fill"></div>
         </div>
-        <div class="time-display">5:20 / 13:14</div>
+        <div class="time-display">0:00 / 13:14</div>
         <div class="controls">
             <button id="prev"><i class="fas fa-step-backward"></i></button>
             <button id="play-pause"><i class="fas fa-play"></i></button>
@@ -28,13 +27,19 @@
             <button id="shuffle"><i class="fas fa-random"></i></button>
             <button id="repeat"><i class="fas fa-redo-alt"></i></button>
         </div>
-        <div class="lyrics-container">
-            <div class="lyrics"></div>
+        <div class="lyrics">
+            <p>你说风吹错了方向,</p>
+            <p>才会在万千网址中，敲出这一个意外。</p>
+            <p class="current-line">可我想说——</p>
+            <p>每一次误入，都是命运偷偷安排的遇见。</p>
+            <p>感谢你来到这里，</p>
+            <p>哪怕只是一瞬，</p>
+            <p>也愿你此刻安然，</p>
+            <p>眼中有光，心里有海。</p>
         </div>
         <audio id="audio-player" src="your-song-url-here.mp3" preload="metadata"></audio>
     </div>
 
-    <!-- 引入外部 JS 文件 -->
-    <script src="js/script.js" defer></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

@@ -1,124 +1,104 @@
-// 检测移动端 vs 桌面端，并给 <body> 添加 class
-const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-document.body.classList.add(isMobile ? 'mobile' : 'desktop');
+document.addEventListener('DOMContentLoaded', () => {
+    const audioPlayer = document.getElementById('audio-player');
+    const playPauseButton = document.getElementById('play-pause');
+    const progressBarFill = document.querySelector('.progress-bar-fill');
+    const timeDisplay = document.querySelector('.time-display');
+    const lyricsLines = document.querySelectorAll('.lyrics p');
 
-const audioPlayer = document.getElementById('audio-player');
-const playPauseButton = document.getElementById('play-pause');
-const progressBarFill = document.querySelector('.progress-bar-fill');
-const timeDisplay = document.querySelector('.time-display');
-const lyricsContainer = document.querySelector('.lyrics');
-let currentLineIndex = 0;
+    let currentLineIndex = 2; // Start with the third line as current
 
-const poemLines = [
-    "你说风吹错了方向，",
-    "才会在万千网址中，敲出这一个意外。",
-    "",
-    "可我想说——",
-    "",
-    "每一次误入，都是命运偷偷安排的遇见。",
-    "",
-    "感谢你来到这里，",
-    "",
-    "哪怕只是一瞬，",
-    "",
-    "也愿你此刻安然，",
-    "",
-    "眼中有光，心里有海。"
-];
+    function updateProgressBar() {
+        const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        progressBarFill.style.width = `${progressPercent}%`;
 
-function loadLyrics() {
-    lyricsContainer.innerHTML = '';
-    poemLines.forEach((line, index) => {
-        const p = document.createElement('p');
-        p.textContent = line;
-        if (index === currentLineIndex) p.classList.add('current-line');
-        lyricsContainer.appendChild(p);
-    });
-}
-loadLyrics();
-
-audioPlayer.addEventListener('loadedmetadata', () => {
-    if (isFinite(audioPlayer.duration) && audioPlayer.duration > 320) {
-        audioPlayer.currentTime = 320;
+        const currentTimeMinutes = Math.floor(audioPlayer.currentTime / 60);
+        const currentTimeSeconds = Math.floor(audioPlayer.currentTime % 60).toString().padStart(2, '0');
+        const durationMinutes = Math.floor(audioPlayer.duration / 60);
+        const durationSeconds = Math.floor(audioPlayer.duration % 60).toString().padStart(2, '0');
+        timeDisplay.textContent = `${currentTimeMinutes}:${currentTimeSeconds} / ${durationMinutes}:${durationSeconds}`;
     }
-    updateTimeDisplay();
-});
 
-function updateTimeDisplay() {
-    const currentTimeMinutes = Math.floor(audioPlayer.currentTime / 60);
-    const currentTimeSeconds = Math.floor(audioPlayer.currentTime % 60).toString().padStart(2, '0');
-    const durationMinutes = Math.floor(audioPlayer.duration / 60);
-    const durationSeconds = Math.floor(audioPlayer.duration % 60).toString().padStart(2, '0');
-    timeDisplay.textContent = `${currentTimeMinutes}:${currentTimeSeconds} / ${durationMinutes}:${durationSeconds}`;
-}
-
-function updateProgressBar() {
-    const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-    progressBarFill.style.width = `${progressPercent}%`;
-    updateTimeDisplay();
-}
-
-function togglePlayPause() {
-    if (audioPlayer.paused) {
-        audioPlayer.play();
-        playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
-    } else {
-        audioPlayer.pause();
-        playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
-    }
-}
-
-function highlightLine(index) {
-    const lines = document.querySelectorAll('.lyrics p');
-    lines.forEach((line, idx) => {
-        if (idx === index) {
-            line.classList.add('current-line');
-            line.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    function togglePlayPause() {
+        if (audioPlayer.paused) {
+            audioPlayer.play();
+            playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
         } else {
-            line.classList.remove('current-line');
+            audioPlayer.pause();
+            playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
         }
+    }
+
+    function nextLine() {
+        if (currentLineIndex < lyricsLines.length - 1) {
+            lyricsLines[currentLineIndex].classList.remove('current-line');
+            currentLineIndex++;
+            lyricsLines[currentLineIndex].classList.add('current-line');
+        }
+    }
+
+    function previousLine() {
+        if (currentLineIndex > 0) {
+            lyricsLines[currentLineIndex].classList.remove('current-line');
+            currentLineIndex--;
+            lyricsLines[currentLineIndex].classList.add('current-line');
+        }
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function handleShuffle() {
+        shuffleArray(Array.from(lyricsLines));
+        lyricsLines.forEach((line, index) => {
+            line.classList.remove('current-line');
+            if (index === 0) {
+                line.classList.add('current-line');
+            }
+        });
+        currentLineIndex = 0;
+    }
+
+    function handleRepeat() {
+        audioPlayer.currentTime = 0;
+        audioPlayer.play();
+    }
+
+    audioPlayer.addEventListener('timeupdate', () => {
+        updateProgressBar();
+
+        // Simple timing for lyrics (adjust as needed)
+        if (audioPlayer.currentTime >= 0 && currentLineIndex !== 0) {
+            lyricsLines[currentLineIndex].classList.remove('current-line');
+            currentLineIndex = 0;
+            lyricsLines[currentLineIndex].classList.add('current-line');
+        }
+        if (audioPlayer.currentTime >= 10 && currentLineIndex === 0) nextLine();
+        if (audioPlayer.currentTime >= 20 && currentLineIndex === 1) nextLine();
+        if (audioPlayer.currentTime >= 30 && currentLineIndex === 2) nextLine();
+        if (audioPlayer.currentTime >= 40 && currentLineIndex === 3) nextLine();
+        if (audioPlayer.currentTime >= 50 && currentLineIndex === 4) nextLine();
+        if (audioPlayer.currentTime >= 60 && currentLineIndex === 5) nextLine();
+        if (audioPlayer.currentTime >= 70 && currentLineIndex === 6) nextLine();
+        if (audioPlayer.currentTime >= 80 && currentLineIndex === 7) nextLine();
     });
-}
 
-function nextLine() {
-    if (currentLineIndex < poemLines.length - 1) {
-        currentLineIndex++;
-        highlightLine(currentLineIndex);
-        audioPlayer.currentTime = Math.min(audioPlayer.currentTime + 10, audioPlayer.duration);
-    }
-}
+    playPauseButton.addEventListener('click', togglePlayPause);
 
-function previousLine() {
-    if (currentLineIndex > 0) {
-        currentLineIndex--;
-        highlightLine(currentLineIndex);
-        audioPlayer.currentTime = Math.max(audioPlayer.currentTime - 10, 0);
-    }
-}
+    document.getElementById('next').addEventListener('click', () => {
+        nextLine();
+        audioPlayer.currentTime += 10; // Move forward by 10 seconds
+    });
 
-function shuffleLyrics() {
-    for (let i = poemLines.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [poemLines[i], poemLines[j]] = [poemLines[j], poemLines[i]];
-    }
-    currentLineIndex = 0;
-    loadLyrics();
-}
+    document.getElementById('prev').addEventListener('click', () => {
+        previousLine();
+        audioPlayer.currentTime -= 10; // Move backward by 10 seconds
+    });
 
-function repeatSong() {
-    audioPlayer.currentTime = 0;
-    if (audioPlayer.paused) audioPlayer.play();
-}
+    document.getElementById('shuffle').addEventListener('click', handleShuffle);
 
-audioPlayer.addEventListener('timeupdate', () => {
-    updateProgressBar();
-    if (audioPlayer.currentTime >= (320 + currentLineIndex * 10)) {
-        highlightLine(currentLineIndex);
-    }
+    document.getElementById('repeat').addEventListener('click', handleRepeat);
 });
-
-playPauseButton.addEventListener('click', togglePlayPause);
-document.getElementById('next').addEventListener('click', nextLine);
-document.getElementById('prev').addEventListener('click', previousLine);
-document.getElementById('shuffle').addEventListener('click', shuffleLyrics);
-document.getElementById('repeat').addEventListener('click', repeatSong);
