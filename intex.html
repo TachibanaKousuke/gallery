@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tachibana's Moments</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 引入外部 CSS 文件 -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="player-container">
+        <div class="album-cover">
+            <img src="https://pic1.imgdb.cn/item/6839700f58cb8da5c81d925f.jpg" alt="Album Cover">
+        </div>
+        <div class="song-info">
+            <h2>误入</h2>
+            <p>Tachibana & U</p>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-bar-fill"></div>
+        </div>
+        <div class="time-display">5:20 / 13:14</div>
+        <div class="controls">
+            <button id="prev"><i class="fas fa-step-backward"></i></button>
+            <button id="play-pause"><i class="fas fa-play"></i></button>
+            <button id="next"><i class="fas fa-step-forward"></i></button>
+            <button id="shuffle"><i class="fas fa-random"></i></button>
+            <button id="repeat"><i class="fas fa-redo-alt"></i></button>
+        </div>
+        <div class="lyrics-container">
+            <div class="lyrics"></div>
+        </div>
+        <audio id="audio-player" src="your-song-url-here.mp3" preload="metadata"></audio>
+    </div>
+
+    <!-- 引入外部 JS 文件 -->
+    <script src="js/script.js" defer></script>
+</body>
+</html>
